@@ -28,11 +28,23 @@ while running:
     #appliquer img joueur
     screen.blit(game.player.image, game.player.rect)
 
+    #actualisation de la JDV joueur
+    game.player.update_health_bar(screen)
+
     # recup les projectiles du joueur
     for projectile in game.player.all_projectiles:
         projectile.move()
+
+    # recuperer les monstres
+    for monster in game.all_monsters:
+        monster.forward()
+        monster.update_health_bar(screen)
+
     #appliquer img groupe projectile
     game.player.all_projectiles.draw(screen)
+
+    #appliquer image grp monstre
+    game.all_monsters.draw(screen)
 
     #verif direction joueur
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x < 500:
