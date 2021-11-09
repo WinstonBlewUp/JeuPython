@@ -6,7 +6,7 @@ import animation
 class Monster(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__("Enemies/Enemy01/Run")
+        super().__init__("monster/monster1")
         self.game = game
         self.health = 20
         self.max_health = 20
@@ -28,6 +28,8 @@ class Monster(animation.AnimateSprite):
             self.velocity = random.randint(1, 3)
             self.health = self.max_health
 
+    def update_animation(self):
+        self.animate()
 
     def update_health_bar(self, surface):
 
