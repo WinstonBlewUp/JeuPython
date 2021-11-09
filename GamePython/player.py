@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.velocity_X = 1
         self.velocity_Y = 15
         self.all_projectiles = pygame.sprite.Group()
-        self.image = pygame.image.load('assets/player2.png')
+        self.image = pygame.image.load('assets/player/run/player_Run_01.png')
         self.rect = self.image.get_rect()
         self.rect.x = 250
         self.rect.y = 300
@@ -22,6 +22,9 @@ class Player(pygame.sprite.Sprite):
     def damage(self, amount):
         if self.health - amount > amount:
             self.health -= amount
+        else:
+            # si le jouer est K.O
+            self.game.game_over()
 
     def update_health_bar(self, surface):
 

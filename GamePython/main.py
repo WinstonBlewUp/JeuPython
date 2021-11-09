@@ -1,4 +1,5 @@
 import pygame
+import math
 from game import Game
 from player import Player
 pygame.init()
@@ -10,8 +11,20 @@ pygame.display.set_caption("Sheriff Vs Alien")
 screen = pygame.display.set_mode((626, 417))
 
 #import bg
-background = pygame.image.load('assets/bg.jpg')
+background = pygame.image.load('assets2/bg.jpg')
 
+#chargement banniere
+banner = pygame.image.load('assets2/banner.png')
+banner = pygame.transform.scale(banner, (300, 300))
+banner_rect = banner.get_rect()
+banner_rect.x = math.ceil(screen.get_width() / 4)
+
+# import bouton PLAY
+play_button = pygame.image.load('assets2/button.png')
+play_button = pygame.transform.scale(play_button, (300, 100))
+play_button_rect = play_button.get_rect()
+play_button_rect.x = math.ceil(screen.get_width() / 4 + 3.8)
+play_button_rect.y = math.ceil(screen.get_height() / 2 + 10)
 #chargement du jeu
 game = Game()
 
@@ -25,32 +38,16 @@ while running:
     #appliquer le bg
     screen.blit(background,(0, 0))
 
-    #appliquer img joueur
-    screen.blit(game.player.image, game.player.rect)
+    #verif si le jeu a commence
+    if game.is_playing:
+        #declenchement des instructions du jeu
+        game.update(screen)
+    #verif si le jeu n'a pas commence
+    else:
+        #ajout ecran accueil
+        screen.blit(play_button, play_button_rect)
+        screen.blit(banner, banner_rect)
 
-    #actualisation de la JDV joueur
-    game.player.update_health_bar(screen)
-
-    # recup les projectiles du joueur
-    for projectile in game.player.all_projectiles:
-        projectile.move()
-
-    # recuperer les monstres
-    for monster in game.all_monsters:
-        monster.forward()
-        monster.update_health_bar(screen)
-
-    #appliquer img groupe projectile
-    game.player.all_projectiles.draw(screen)
-
-    #appliquer image grp monstre
-    game.all_monsters.draw(screen)
-
-    #verif direction joueur
-    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x < 500:
-        game.player.move_right()
-    elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0:
-        game.player.move_left()
 
     #MaJ ecran
     pygame.display.flip()
@@ -83,6 +80,13 @@ while running:
             #detect touche s pour shoot
             if event.key == pygame.K_s:
                 game.player.launch_projectile()
+
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
+
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            #verif si collision avec btn PLAY
+            if play_button_rect.collidepoint(event.pos):
+                # lancer le jeu
+                game.start()
 

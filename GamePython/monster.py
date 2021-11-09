@@ -1,16 +1,16 @@
 import pygame
 import random
+import animation
 
 # def class monstre
-class Monster(pygame.sprite.Sprite):
+class Monster(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__()
+        super().__init__("Enemies/Enemy01/Run")
         self.game = game
         self.health = 20
         self.max_health = 20
-        self.attack = 0.3
-        self.image = pygame.image.load('assets/alien.png')
+        self.attack = 0.1
         self.image = pygame.transform.scale(self.image, (70, 70))
         self.rect = self.image.get_rect()
         self.rect.x = 520 + random.randint(0, 300)
