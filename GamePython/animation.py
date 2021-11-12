@@ -5,11 +5,13 @@ import pygame
 class AnimateSprite(pygame.sprite.Sprite):
 
     #def des animations
-    def __init__(self, sprite_name):
+    def __init__(self, sprite_name, size=(200, 200)):
         super().__init__()
+        self.size = size
         self.image = pygame.image.load(f'assets/{sprite_name}.png')
+        self.image = pygame.transform.scale(self.image, size)
         self.current_image = 0 #debut anim img n0
-        self.images = animations.get('mummy')
+        self.images = animations.get(sprite_name)
         self.animation = False
 
     # def methode debut animation
@@ -31,11 +33,14 @@ class AnimateSprite(pygame.sprite.Sprite):
                 #remettre anim à 0
                 self.current_image = 0
 
+
                 if loop is False:
                     #desactivation
                     self.animation = False
+
             #remplacer l'img de l'anim prec -> nxt
             self.image = self.images[self.current_image]
+            self.image = pygame.transform.scale(self.image, self.size)
 
 
 #def une fonction qui charge les images dun sprite
@@ -56,7 +61,8 @@ def load_animation_images(sprite_name):
 #def dico contenant les images chargees des sprites
 animations = {
     'mummy': load_animation_images('mummy'),
-    'player': load_animation_images('player')
+    'player': load_animation_images('player'),
+    'alien': load_animation_images('alien')
 }
 
 

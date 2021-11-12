@@ -5,18 +5,25 @@ import animation
 # def class monstre
 class Monster(animation.AnimateSprite):
 
-    def __init__(self, game):
-        super().__init__("mummy")
+    def __init__(self, game, name, size, offset=0):
+        super().__init__(name, size)
         self.game = game
         self.health = 100
         self.max_health = 100
         self.attack = 1
         self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
-        self.rect.x = 1100 + random.randint(0, 300)
-        self.rect.y = 500
-        self.velocity = random.randint(1, 3)
+        self.rect.x = 1000 + random.randint(0, 300)
+        self.rect.y = 540 - offset
+        self.loot_amount = 10
         self.start_animation()
+
+    def set_speed(self, speed):
+        self.default_speed = speed
+        self.velocity = random.randint(1, 3)
+
+    def set_loot_amount(self, amount):
+        self.loot_amount = amount
 
     def damage(self, amount):
         #infliction des degat
@@ -26,8 +33,10 @@ class Monster(animation.AnimateSprite):
         if self.health <= 0:
             # respawn monstre
             self.rect.x = 1100 + random.randint(0, 300)
-            self.velocity = 1
+            self.velocity = random.randint(1, self.default_speed)
             self.health = self.max_health
+            #ajout nbr points
+            self.game.add_score(self.loot_amount)
 
             #si comet fall a 100%
             if self.game.comet_event.is_full_loaded():
@@ -57,3 +66,25 @@ class Monster(animation.AnimateSprite):
         else:
             #infliction degats
             self.game.player.damage(self.attack)
+
+
+# def class mummy
+
+class Mummy(Monster):
+
+    def __init__(self, game):
+        super().__init__(game, "mummy", (130, 130))
+        self.set_speed(3)
+        self.set_loot_amount(20)
+
+
+#definir class Alien
+class Alien(Monster):
+
+        def __init__(self, game):
+            super().__init__(game, "alien", (300, 300), 130)
+            self.health = 250
+            self.max_health = 250
+            self.attack = 2
+            self.set_speed(1)
+            self.set_loot_amount(80)

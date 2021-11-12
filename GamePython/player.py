@@ -39,17 +39,19 @@ class Player(animation.AnimateSprite):
     def launch_projectile(self):
         #creer instance class projectile
         self.all_projectiles.add(Projectile(self))
-
+        self.start_animation()
+        #jouer le son
+        self.game.sound_manager.play('tir')
 
     def move_right(self):
         #uniquement si le joueur n'est pas en collision
         if not self.game.check_collision(self, self.game.all_monsters):
             self.rect.x += self.velocity_X
-            self.start_animation()
+
 
     def move_left(self):
         self.rect.x -= self.velocity_X
-        self.start_animation()
+
 
 
 

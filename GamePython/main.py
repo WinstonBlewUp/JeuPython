@@ -5,6 +5,12 @@ from player import Player
 pygame.init()
 
 
+#def clock
+
+clock = pygame.time.Clock()
+FPS = 60
+
+
 #gen enetre du jeu
 
 pygame.display.set_caption("Shooter")
@@ -76,6 +82,9 @@ while running:
                         game.player.velocity_Y = 14
                         if  is_jump is False:
                             game.player.rect.y = 300
+            if not game.is_playing:
+                # lancer le jeu
+                game.start()
 
             #detect touche s pour shoot
             if event.key == pygame.K_s:
@@ -89,4 +98,8 @@ while running:
             if play_button_rect.collidepoint(event.pos):
                 # lancer le jeu
                 game.start()
+                #jouer le son
+                game.sound_manager.play('click')
 
+    # fixer le nbr de fPS
+    clock.tick(FPS)
