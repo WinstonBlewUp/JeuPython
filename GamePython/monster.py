@@ -6,30 +6,40 @@ import animation
 class Monster(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__("monster/monster1")
+        super().__init__("mummy")
         self.game = game
-        self.health = 20
-        self.max_health = 20
-        self.attack = 0.1
-        self.image = pygame.transform.scale(self.image, (70, 70))
+        self.health = 100
+        self.max_health = 100
+        self.attack = 1
+        self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
-        self.rect.x = 520 + random.randint(0, 300)
-        self.rect.y = 325
-        self.velocity = (random.randint(1, 2))/4
+        self.rect.x = 1100 + random.randint(0, 300)
+        self.rect.y = 500
+        self.velocity = random.randint(1, 3)
+        self.start_animation()
 
     def damage(self, amount):
         #infliction des degat
-        self.health-= amount
+        self.health -= amount
 
         #verif si PV <= 0
         if self.health <= 0:
             # respawn monstre
-            self.rect.x = 520 + random.randint(0, 300)
-            self.velocity = random.randint(1, 3)
+            self.rect.x = 1100 + random.randint(0, 300)
+            self.velocity = 1
             self.health = self.max_health
 
+            #si comet fall a 100%
+            if self.game.comet_event.is_full_loaded():
+
+                #retire du jeu
+                self.game.all_monsters.remove(self)
+
+                # appel methpde pluie
+                self.game.comet_event.attempt_fall()
+
     def update_animation(self):
-        self.animate()
+        self.animate(loop = True)
 
     def update_health_bar(self, surface):
 

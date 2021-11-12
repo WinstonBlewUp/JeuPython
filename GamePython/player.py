@@ -1,23 +1,23 @@
 import pygame
 from projectile import Projectile
+import animation
 
 #premiere classe = joueur
 
-class Player(pygame.sprite.Sprite):
+class Player(animation.AnimateSprite):
 
     def __init__(self, game):
-        super().__init__()
+        super().__init__("player")
         self.game = game
         self.health = 100
         self.max_health = 100
-        self.attack = 10
-        self.velocity_X = 1
+        self.attack = 20
+        self.velocity_X = 5
         self.velocity_Y = 15
         self.all_projectiles = pygame.sprite.Group()
-        self.image = pygame.image.load('assets/player/player1.png')
         self.rect = self.image.get_rect()
         self.rect.x = 250
-        self.rect.y = 300
+        self.rect.y = 500
 
     def damage(self, amount):
         if self.health - amount > amount:
@@ -25,6 +25,9 @@ class Player(pygame.sprite.Sprite):
         else:
             # si le jouer est K.O
             self.game.game_over()
+
+    def update_animation(self):
+        self.animate()
 
     def update_health_bar(self, surface):
 
@@ -42,9 +45,11 @@ class Player(pygame.sprite.Sprite):
         #uniquement si le joueur n'est pas en collision
         if not self.game.check_collision(self, self.game.all_monsters):
             self.rect.x += self.velocity_X
+            self.start_animation()
 
     def move_left(self):
         self.rect.x -= self.velocity_X
+        self.start_animation()
 
 
 

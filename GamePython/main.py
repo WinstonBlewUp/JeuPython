@@ -7,24 +7,24 @@ pygame.init()
 
 #gen enetre du jeu
 
-pygame.display.set_caption("Sheriff Vs Alien")
-screen = pygame.display.set_mode((626, 417))
+pygame.display.set_caption("Shooter")
+screen = pygame.display.set_mode((1080, 720))
 
 #import bg
-background = pygame.image.load('assets2/bg.jpg')
+background = pygame.image.load('assets/bg.jpg')
 
 #chargement banniere
-banner = pygame.image.load('assets2/banner.png')
-banner = pygame.transform.scale(banner, (300, 300))
+banner = pygame.image.load('assets/banner.png')
+banner = pygame.transform.scale(banner, (500, 500))
 banner_rect = banner.get_rect()
 banner_rect.x = math.ceil(screen.get_width() / 4)
 
 # import bouton PLAY
-play_button = pygame.image.load('assets2/button.png')
-play_button = pygame.transform.scale(play_button, (300, 100))
+play_button = pygame.image.load('assets/button.png')
+play_button = pygame.transform.scale(play_button, (500, 150))
 play_button_rect = play_button.get_rect()
-play_button_rect.x = math.ceil(screen.get_width() / 4 + 3.8)
-play_button_rect.y = math.ceil(screen.get_height() / 2 + 10)
+play_button_rect.x = math.ceil(screen.get_width() / 4 + 10 )
+play_button_rect.y = math.ceil(screen.get_height() / 2)
 #chargement du jeu
 game = Game()
 
@@ -36,7 +36,7 @@ is_jump = False
 while running:
 
     #appliquer le bg
-    screen.blit(background,(0, 0))
+    screen.blit(background,(0, -200))
 
     #verif si le jeu a commence
     if game.is_playing:
