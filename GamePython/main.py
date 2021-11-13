@@ -72,22 +72,12 @@ while running:
             #detect touche espace pour jump
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                is_jump = True
-                if is_jump:
-                    #pygame.time.delay(0)
-                    game.player.rect.y -= game.player.velocity_Y
-                    game.player.velocity_Y -= 1
-                    if game.player.velocity_Y <= -15 and game.player.rect.y <= 300:
-                        is_jump = False
-                        game.player.velocity_Y = 14
-                        if  is_jump is False:
-                            game.player.rect.y = 300
-            if not game.is_playing:
-                # lancer le jeu
-                game.start()
+                if not game.is_playing:
+                    # lancer le jeu
+                    game.start()
 
             #detect touche s pour shoot
-            if event.key == pygame.K_s:
+            if event.key == pygame.K_SPACE:
                 game.player.launch_projectile()
 
         elif event.type == pygame.KEYUP:

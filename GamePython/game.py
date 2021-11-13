@@ -91,9 +91,9 @@ class Game:
         self.all_monsters.draw(screen)
 
         # verif direction joueur
-        if self.pressed.get(pygame.K_RIGHT) and self.player.rect.x < 1200:
+        if self.pressed.get(pygame.K_d) and self.player.rect.x < 1200:
             self.player.move_right()
-        elif self.pressed.get(pygame.K_LEFT) and self.player.rect.x > 0:
+        elif self.pressed.get(pygame.K_q) and self.player.rect.x > 0:
             self.player.move_left()
 
     def check_collision(self, sprite, group):
