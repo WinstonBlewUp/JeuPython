@@ -33,8 +33,8 @@ class Player(animation.AnimateSprite):
 
         #Jauge De Vie
 
-        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 7, self.rect.y - 10, self.max_health, 5])
-        pygame.draw.rect(surface,(111, 210, 46), [self.rect.x + 7, self.rect.y - 10, self.health, 5])
+        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 15, self.rect.y - 10, self.max_health, 5])
+        pygame.draw.rect(surface,(111, 210, 46), [self.rect.x  + 15, self.rect.y - 10, self.health, 5])
 
     def launch_projectile(self):
         #creer instance class projectile
